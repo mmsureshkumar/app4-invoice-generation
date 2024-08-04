@@ -32,12 +32,31 @@ for filepath in filepaths:
 
     for index, row in df.iterrows():
         # Add a row
-        pdf.set_font(family="Times", style="B", size=10)
+        pdf.set_font(family="Times", style="", size=10)
         pdf.set_text_color(80, 80, 80)
         pdf.cell(w=30, h=8, txt=str(row["product_id"]), border=1)
         pdf.cell(w=65, h=8, txt=str(row["product_name"]), border=1)
         pdf.cell(w=30, h=8, txt=str(row["amount_purchased"]), border=1)
         pdf.cell(w=30, h=8, txt=str(row["price_per_unit"]), border=1)
         pdf.cell(w=30, h=8, txt=str(row["total_price"]), border=1, ln=1)
+
+    # Add total row of total price
+    total_sum = df["total_price"].sum()
+    pdf.set_font(family="Times", style="B", size=10)
+    pdf.set_text_color(80, 80, 80)
+    pdf.cell(w=30, h=8, txt="", border=1)
+    pdf.cell(w=65, h=8, txt="", border=1)
+    pdf.cell(w=30, h=8, txt="", border=1)
+    pdf.cell(w=30, h=8, txt="", border=1)
+    pdf.cell(w=30, h=8, txt=str(total_sum), border=1, ln=1)
+
+    pdf.set_font(family="Times", style="B", size=10)
+    pdf.set_text_color(80, 80, 80)
+    pdf.cell(w=30, h=8, txt=f"The total price is {total_sum}", border=0, ln=1)
+
+    pdf.set_font(family="Times", style="", size=10)
+    pdf.set_text_color(80, 80, 80)
+    pdf.cell(w=25, h=8, txt="pythonHow", border=0)
+    pdf.image("pythonHow.png", x=26.5, w=10, h=10)
 
     pdf.output(f"PDFs/{filename}.pdf")
